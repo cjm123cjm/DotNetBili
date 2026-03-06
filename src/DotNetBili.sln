@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetBili.IService", "DotN
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetBili.Service", "DotNetBili.Service\DotNetBili.Service.csproj", "{18149187-5D2A-4F93-9A0E-BC00BAD625ED}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetBili.Extension", "DotNetBili.Extension\DotNetBili.Extension.csproj", "{AFD9D371-7DC3-414C-8E35-E474360A5655}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{18149187-5D2A-4F93-9A0E-BC00BAD625ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18149187-5D2A-4F93-9A0E-BC00BAD625ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18149187-5D2A-4F93-9A0E-BC00BAD625ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFD9D371-7DC3-414C-8E35-E474360A5655}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFD9D371-7DC3-414C-8E35-E474360A5655}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFD9D371-7DC3-414C-8E35-E474360A5655}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFD9D371-7DC3-414C-8E35-E474360A5655}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

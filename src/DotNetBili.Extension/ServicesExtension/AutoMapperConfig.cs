@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace DotNetBili.Admin.Extensions
+namespace DotNetBili.Extension.ServicesExtension
 {
     /// <summary>
     /// 静态全局 AutoMapper 配置文件
