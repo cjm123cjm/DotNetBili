@@ -10,5 +10,6 @@ namespace DotNetBili.IService.Base
         /// <param name="user"></param>
         /// <returns></returns>
         string GenerateToken(UserInfo user);
+        string GenerateToken(string userName);
     }
 }

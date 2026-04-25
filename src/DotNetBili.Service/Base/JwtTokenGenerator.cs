@@ -37,5 +37,31 @@ namespace DotNetBili.Service.Base
 
             return tokenHandle.WriteToken(token);
         }
+
+        public string GenerateToken(string userName)
+        {
+            var tokenHandle = new JwtSecurityTokenHandler();
+
+            var jwtOptions = App.GetOptions<JwtOptions>();
+            var key = Encoding.ASCII.GetBytes(jwtOptions.Secret);
+
+            var claimList = new List<Claim>
+            {
+                new Claim("UserName", userName),
+            };
+
+            var tokenDescript = new SecurityTokenDescriptor
+            {
+                Audience = jwtOptions.Audience,
+                Issuer = jwtOptions.Issuer,
+                Subject = new ClaimsIdentity(claimList),
+                Expires = DateTime.UtcNow.AddMinutes(jwtOptions.Expires),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var token = tokenHandle.CreateToken(tokenDescript);
+
+            return tokenHandle.WriteToken(token);
+        }
     }
 }

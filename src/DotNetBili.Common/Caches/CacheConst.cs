@@ -40,6 +40,7 @@
         /// <summary>
         /// token缓存
         /// </summary>
-        public const string tokenWeb = "tokenWeb:";
+        public const string tokenWeb = "token:Web:";
+        public const string tokenAdmin = "token:Admin:";
     }
 }
