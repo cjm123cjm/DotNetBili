@@ -108,5 +108,44 @@ namespace DotNetBili.Common.HttpContextUser
 
             return "";
         }
+
+        public string GetClientIp()
+        {
+            if (_contextAccessor.HttpContext == null)
+                return string.Empty;
+
+            var request = _contextAccessor.HttpContext.Request;
+
+            // 尝试从 X-Forwarded-For 获取真实IP（使用反向代理时）
+            var forwardedIps = request.Headers["X-Forwarded-For"].FirstOrDefault();
+            if (!string.IsNullOrEmpty(forwardedIps))
+            {
+                // 多个IP时取第一个（最原始的客户端IP）
+                var ips = forwardedIps.Split(',');
+                if (ips.Length > 0)
+                    return ips[0].Trim();
+            }
+
+            // 尝试从 X-Real-IP 获取
+            var realIp = request.Headers["X-Real-IP"].FirstOrDefault();
+            if (!string.IsNullOrEmpty(realIp))
+                return realIp;
+
+            // 直接获取 RemoteIpAddress
+            return _contextAccessor.HttpContext.Connection.RemoteIpAddress?.ToString() ?? string.Empty;
+        }
+
+        public string GetClientIpv4()
+        {
+            var ip = GetClientIp();
+
+            // 处理 IPv6 映射的 IPv4 地址 (如 ::ffff:192.168.1.1)
+            if (ip.StartsWith("::ffff:"))
+            {
+                ip = ip.Substring(7);
+            }
+
+            return ip;
+        }
     }
 }

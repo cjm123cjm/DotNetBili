@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DotNetBili.Extension.Profiles;
 
 namespace DotNetBili.Extension.ServicesExtension
 {
@@ -11,7 +12,7 @@ namespace DotNetBili.Extension.ServicesExtension
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.AddProfile<CustomProfile>();
+                cfg.AddProfile<UserProfile>();
             });
             return config;
         }

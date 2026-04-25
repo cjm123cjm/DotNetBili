@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DotNetBili.Service\DotNetBili.Service.csproj" />
+    <ProjectReference Include="..\DotNetBili.Extension\DotNetBili.Extension.csproj" />
   </ItemGroup>
 
 </Project>

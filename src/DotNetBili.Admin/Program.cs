@@ -4,10 +4,15 @@ using DotNetBili.Admin.Extensions;
 using DotNetBili.Common;
 using DotNetBili.Common.Core;
 using DotNetBili.Common.HttpContextUser;
+using DotNetBili.Extension.Middlewares;
 using DotNetBili.Extension.ServicesExtension;
+using DotNetBili.Model.Dto;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,6 +55,7 @@ builder.Services.AddSqlsugerSetup();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
+        var key = Encoding.ASCII.GetBytes(builder.Configuration["Jwt:SecretKey"]!);
         options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
         {
             ValidateIssuer = true,
@@ -58,15 +64,52 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true,
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"])),
+            IssuerSigningKey = new SymmetricSecurityKey(key),
             ClockSkew = TimeSpan.Zero
         };
+
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+                Console.WriteLine($"Received Token: {!string.IsNullOrEmpty(token)}");
+                if (!string.IsNullOrEmpty(token))
+                {
+                    Console.WriteLine($"Token length: {token.Length}");
+                }
+                return Task.CompletedTask;
+            },
+            OnAuthenticationFailed = context =>
+            {
+                Console.WriteLine($"Authentication failed: {context.Exception.Message}");
+                return Task.CompletedTask;
+            }
+        };
     });
+builder.Services.AddAuthorization();
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<IUser, AspNetUser>();
 
+//模型验证
+builder.Services.AddOptions().Configure<ApiBehaviorOptions>(options =>
+{
+    options.InvalidModelStateResponseFactory = context =>
+    {
+        var errorInfo = new ValidationProblemDetails(context.ModelState).Errors
+             .Select(t => $"{t.Key}:{string.Join(",", t.Value)}");
+        return new OkObjectResult(new ResponseDto
+        {
+            Code = 200,
+            IsSuccess = false,
+            Message = string.Join("\r\n", errorInfo)
+        });
+    };
+});
+
 var app = builder.Build();
+app.UseErrorHandling();
 app.ConfigureApplication();
 app.UseApplicationSetup();
 

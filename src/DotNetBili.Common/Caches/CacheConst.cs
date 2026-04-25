@@ -8,44 +8,9 @@
         public const string KeyUser = "user:";
 
         /// <summary>
-        /// 用户部门缓存
-        /// </summary>
-        public const string KeyUserDepart = "userDepart:";
-
-        /// <summary>
-        /// 菜单缓存
-        /// </summary>
-        public const string KeyMenu = "menu:";
-
-        /// <summary>
-        /// 菜单
-        /// </summary>
-        public const string KeyPermissions = "permissions";
-
-        /// <summary>
-        /// 权限缓存
-        /// </summary>
-        public const string KeyPermission = "permission:";
-
-        /// <summary>
-        /// 接口路由
-        /// </summary>
-        public const string KeyModules = "modules";
-
-        /// <summary>
         /// 系统配置
         /// </summary>
         public const string KeySystemConfig = "sysConfig";
-
-        /// <summary>
-        /// 查询过滤器缓存
-        /// </summary>
-        public const string KeyQueryFilter = "queryFilter:";
-
-        /// <summary>
-        /// 机构Id集合缓存
-        /// </summary>
-        public const string KeyOrgIdList = "org:";
 
         /// <summary>
         /// 最大角色数据范围缓存
@@ -73,13 +38,8 @@
         public const string KeyOnlineUser = "onlineuser:";
 
         /// <summary>
-        /// 常量下拉框
+        /// token缓存
         /// </summary>
-        public const string KeyConstSelector = "selector:";
-
-        /// <summary>
-        /// swagger登录缓存
-        /// </summary>
-        public const string SwaggerLogin = "swaggerLogin:";
+        public const string tokenWeb = "tokenWeb:";
     }
 }

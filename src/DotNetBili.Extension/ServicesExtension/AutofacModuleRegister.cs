@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Autofac.Extras.DynamicProxy;
 using DotNetBili.IService;
+using DotNetBili.IService.Base;
 using DotNetBili.Repository.Base;
 using DotNetBili.Repository.UnitOfWorks;
 using DotNetBili.Service.Base;
@@ -14,6 +15,11 @@ namespace DotNetBili.Extension.ServicesExtension
         {
             var basePath = AppContext.BaseDirectory;
 
+            builder.RegisterType<JwtTokenGenerator>().As<IJwtTokenGenerator>()
+                .AsImplementedInterfaces()
+                .InstancePerLifetimeScope()
+                .PropertiesAutowired();
+
             var servicesDllPath = Path.Combine(basePath, "DotNetBili.Service.dll");
             var repositoryDllPath = Path.Combine(basePath, "DotNetBili.Repository.dll");
 
@@ -22,7 +28,7 @@ namespace DotNetBili.Extension.ServicesExtension
             builder.RegisterType<TranAOP>();
 
             builder.RegisterGeneric(typeof(BaseRepository<>)).As(typeof(IBaseRepository<>)).InstancePerDependency();//仓储
-            builder.RegisterGeneric(typeof(BaseService<,>)).As(typeof(IBaseService<,>))
+            builder.RegisterGeneric(typeof(BaseService<>)).As(typeof(IBaseServices<>))
                     .InstancePerDependency()
                     .EnableInterfaceInterceptors()
                     .InterceptedBy(aopTypes.ToArray());//服务
