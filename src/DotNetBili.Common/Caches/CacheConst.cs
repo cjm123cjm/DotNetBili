@@ -42,5 +42,10 @@
         /// </summary>
         public const string tokenWeb = "token:Web:";
         public const string tokenAdmin = "token:Admin:";
+
+        /// <summary>
+        /// 分类缓存
+        /// </summary>
+        public const string category = "category:list";
     }
 }

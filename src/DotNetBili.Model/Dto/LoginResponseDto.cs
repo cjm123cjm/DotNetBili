@@ -1,4 +1,6 @@
-﻿namespace DotNetBili.Model.Dto
+﻿using DotNetBili.Model.Dto.Account;
+
+namespace DotNetBili.Model.Dto
 {
     /// <summary>
     /// 登录返回

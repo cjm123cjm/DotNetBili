@@ -1,4 +1,4 @@
-﻿namespace DotNetBili.Model.Dto
+﻿namespace DotNetBili.Model.Dto.Account
 {
     /// <summary>
     /// userDto

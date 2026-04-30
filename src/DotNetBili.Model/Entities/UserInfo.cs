@@ -10,13 +10,13 @@ namespace DotNetBili.Model.Entities
         /// <summary>
         /// 用户id
         /// </summary>
-        [SugarColumn(IsPrimaryKey = true,ColumnName ="user_id")]
+        [SugarColumn(IsPrimaryKey = true, ColumnName = "user_id")]
         public long UserId { get; set; }
 
         /// <summary>
         /// 昵称
         /// </summary>
-        [SugarColumn(ColumnName ="nick_name")]
+        [SugarColumn(ColumnName = "nick_name")]
         public string NickName { get; set; } = null!;
 
         /// <summary>

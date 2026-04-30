@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using DotNetBili.Model.Dto;
+using DotNetBili.Model.Dto.Account;
 using DotNetBili.Model.Entities;
 
 namespace DotNetBili.Extension.Profiles

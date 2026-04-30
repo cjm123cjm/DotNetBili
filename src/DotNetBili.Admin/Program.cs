@@ -4,6 +4,7 @@ using DotNetBili.Admin.Extensions;
 using DotNetBili.Common;
 using DotNetBili.Common.Core;
 using DotNetBili.Common.HttpContextUser;
+using DotNetBili.Common.Option;
 using DotNetBili.Extension.Middlewares;
 using DotNetBili.Extension.ServicesExtension;
 using DotNetBili.Model.Dto;
@@ -11,6 +12,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -118,6 +121,19 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+//¾²Ì¬ÎÄ¼þ
+var path = app.Services.GetRequiredService<IOptions<FolderPathOptions>>();
+app.UseStaticFiles(new StaticFileOptions
+{
+    //E:\\dotnetbili
+    FileProvider = new PhysicalFileProvider(Path.Combine(path.Value.PhysicalPath)),
+    RequestPath = path.Value.VirtualPath,
+    OnPrepareResponse = ctx =>
+    {
+        ctx.Context.Response.Headers.Append("Cache-Control", "public,max-age=600");
+    }
+});
 
 app.UseAuthentication();
 app.UseAuthorization();
